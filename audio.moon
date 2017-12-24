@@ -1,16 +1,18 @@
-Oscillator = require 'oscillator'
+Voice = require 'voice'
 
 source = love.audio.newQueueableSource SAMPLE_RATE, BIT_DEPTH, CHANNELS
 data = love.sound.newSoundData BUFFER_SIZE, SAMPLE_RATE, BIT_DEPTH, CHANNELS
 timer = 0
 sample = 0
 
-osc = Oscillator!
+voices = {}
+table.insert voices, Voice 12
 
 getNextSample = ->
 	s = 0
-	osc\update!
-	s += .1 * osc\getValue!
+	for voice in *voices do with voice
+		\update!
+		s += .1 * \getValue!
 	s
 
 return {
