@@ -1,3 +1,4 @@
+Envelope = require 'envelope'
 Oscillator = require 'oscillator'
 util = require 'util'
 
@@ -6,6 +7,7 @@ class
 		@oscillators = {}
 		for i = 1, NUM_OSCILLATORS
 			@oscillators[i] = Oscillator!
+		@volumeEnvelope = Envelope 1, 2, .5, 3
 		@v = 0
 
 	update: =>
@@ -14,5 +16,13 @@ class
 			.frequency = util.noteToFrequency @note
 			\update!
 			@v += \getValue!
+		with @volumeEnvelope
+			\update!
+			@v *= \getValue!
+
+	release: =>
+		@volumeEnvelope\release!
+
+	isFinished: => @volumeEnvelope\isFinished!
 
 	getValue: => @v

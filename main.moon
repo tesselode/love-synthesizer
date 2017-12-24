@@ -12,3 +12,9 @@ love.update = (dt) ->
 
 love.keypressed = (key) ->
 	love.event.quit! if key == 'escape'
+	audio.keypressed key
+
+love.keyreleased = (...) -> audio.keyreleased ...
+
+love.draw = ->
+	love.graphics.print audio\getActiveVoicesCount!
