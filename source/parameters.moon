@@ -1,4 +1,4 @@
-Parameter = require 'parameter'
+Parameter = require 'class.parameter'
 
 {
 	volumeEnvelope:

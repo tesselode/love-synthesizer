@@ -1,5 +1,5 @@
-Envelope = require 'envelope'
-Oscillator = require 'oscillator'
+Envelope = require 'class.envelope'
+Oscillator = require 'class.oscillator'
 parameters = require 'parameters'
 util = require 'util'
 

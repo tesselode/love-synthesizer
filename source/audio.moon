@@ -1,5 +1,5 @@
 keymap = require 'keymap'
-Voice = require 'voice'
+Voice = require 'class.voice'
 
 source = love.audio.newQueueableSource SAMPLE_RATE, BIT_DEPTH, CHANNELS
 data = love.sound.newSoundData BUFFER_SIZE, SAMPLE_RATE, BIT_DEPTH, CHANNELS
