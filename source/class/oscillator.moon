@@ -1,7 +1,11 @@
+util = require 'util'
+
 class
 	new: =>
 		@wave = 'sine'
 		@frequency = 440
+		@shape = 1
+		@smooth = 1
 		@phase = 0
 		@v = 0
 
@@ -23,6 +27,8 @@ class
 	update: =>
 		@phase += @frequency / SAMPLE_RATE
 		@phase %= 1
-		@v = @[@wave] @
+		v = @[@wave] @
+		v = math.abs(v) ^ @shape * util.sign(v)
+		@v = util.lerp @v, v, @smooth
 
 	getValue: => @v

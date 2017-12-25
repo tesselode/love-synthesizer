@@ -16,7 +16,9 @@ class
 	updateOscillators: =>
 		for i, osc in ipairs @oscillators do with osc
 			.wave = parameters.oscillator[i].wave\getValue!
-			.frequency = util.noteToFrequency @note
+			.frequency = util.noteToFrequency @note + parameters.oscillator[i].pitch\getValue!
+			.shape = parameters.oscillator[i].shape\getValue!
+			.smooth = parameters.oscillator[i].smooth\getValue!
 			\update!
 
 	updateEnvelopes: =>
