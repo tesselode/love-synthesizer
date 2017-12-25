@@ -13,6 +13,12 @@ class
 				.s\getValue!, .r\getValue!
 		@v = 0
 
+	updateOscillators: =>
+		for i, osc in ipairs @oscillators do with osc
+			.wave = parameters.oscillator[i].wave\getValue!
+			.frequency = util.noteToFrequency @note
+			\update!
+
 	updateEnvelopes: =>
 		with @volumeEnvelope
 			.a = parameters.volumeEnvelope.a\getValue!
@@ -21,11 +27,10 @@ class
 			.r = parameters.volumeEnvelope.r\getValue!
 
 	update: =>
+		@updateOscillators!
 		@updateEnvelopes!
 		@v = 0
 		for osc in *@oscillators do with osc
-			.frequency = util.noteToFrequency @note
-			\update!
 			@v += \getValue!
 		with @volumeEnvelope
 			\update!
