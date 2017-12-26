@@ -7,9 +7,9 @@ Parameter = require 'class.parameter'
 			pitch: Parameter.Slider 'Pitch', -24, 24, -24
 			pitchLfoMod: Parameter.Slider 'Pitch LFO mod', -24, 24, 0
 			pitchEnvMod: Parameter.Slider 'Pitch env mod', -24, 24, 0
-			shape: Parameter.Slider 'Shape', .1, 100, 1
-			shapeLfoMod: Parameter.Slider 'Shape LFO mod', -100, 100, 0
-			shapeEnvMod: Parameter.Slider 'Shape env mod', -100, 100, 0
+			shape: Parameter.Slider 'Shape', .1, 100, 1, 7
+			shapeLfoMod: Parameter.Slider 'Shape LFO mod', 0, 100, 0, 7
+			shapeEnvMod: Parameter.Slider 'Shape env mod', 0, 100, 0, 7
 			smooth: Parameter.Slider 'Smooth', .1, 1, 1
 			smoothLfoMod: Parameter.Slider 'Smooth LFO mod', -1, 1, 0
 			smoothEnvMod: Parameter.Slider 'Smooth env mod', -1, 1, 0
@@ -18,9 +18,9 @@ Parameter = require 'class.parameter'
 			pitch: Parameter.Slider 'Pitch', -24, 24, -24
 			pitchLfoMod: Parameter.Slider 'Pitch LFO mod', -24, 24, 0
 			pitchEnvMod: Parameter.Slider 'Pitch env mod', -24, 24, 0
-			shape: Parameter.Slider 'Shape', .1, 100, .1
-			shapeLfoMod: Parameter.Slider 'Shape LFO mod', -100, 100, 0
-			shapeEnvMod: Parameter.Slider 'Shape env mod', -100, 100, 0
+			shape: Parameter.Slider 'Shape', .1, 100, .1, 7
+			shapeLfoMod: Parameter.Slider 'Shape LFO mod', 0, 100, 0, 7
+			shapeEnvMod: Parameter.Slider 'Shape env mod', 0, 100, 0, 7
 			smooth: Parameter.Slider 'Smooth', .1, 1, 1
 			smoothLfoMod: Parameter.Slider 'Smooth LFO mod', -1, 1, 0
 			smoothEnvMod: Parameter.Slider 'Smooth env mod', -1, 1, 0
@@ -43,7 +43,7 @@ Parameter = require 'class.parameter'
 		s: Parameter.Slider 'Sustain', 0, 1, .25
 		r: Parameter.Slider 'Release', .01, 10, 1
 	lfo:
-		frequency: Parameter.Slider 'Frequency', .1, 100, 3
-		shape: Parameter.Slider 'Shape', .1, 100, 1
+		frequency: Parameter.Slider 'Frequency', .1, 100, 3, 2
+		shape: Parameter.Slider 'Shape', .1, 100, 1, 7
 		smooth: Parameter.Slider 'Smooth', .1, 1, 1
 }

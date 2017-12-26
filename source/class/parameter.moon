@@ -12,8 +12,8 @@ class Parameter.Choice
 	updateGui: =>
 
 class Parameter.Slider
-	new: (@name, @min, @max, @default) =>
-		@value = (@default - @min) / (@max - min)
+	new: (@name, @min, @max, @default, @curve = 1) =>
+		@value = ((@default - @min) / (@max - min)) ^ (1 / @curve)
 		@slider = setmetatable {min: 0, max: 1, _value: @value}, {
 			__index: (t, k) -> k == 'value' and t._value or rawget(t, k)
 			__newindex: (t, k, v) ->
@@ -24,7 +24,7 @@ class Parameter.Slider
 					rawset t, k, v
 		}
 
-	getValue: => util.lerp @min, @max, @value
+	getValue: => util.lerp @min, @max, @value ^ @curve
 
 	updateGui: =>
 		with suit
