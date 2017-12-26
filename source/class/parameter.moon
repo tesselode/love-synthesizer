@@ -1,15 +1,17 @@
 util = require 'util'
 
-{
-	Choice: class
-		new: (@name, @choices, @default = 1) =>
-			@value = @default
+Parameter = {}
 
-		getValue: => @choices[@value]
+class Parameter.Choice
+	new: (@name, @choices, @default = 1) =>
+		@value = @default
 
-	Slider: class
-		new: (@name, @min, @max, @default) =>
-			@value = @default
+	getValue: => @choices[@value]
 
-		getValue: => util.lerp @min, @max, @value
-}
+class Parameter.Slider
+	new: (@name, @min, @max, @default) =>
+		@value = @default
+
+	getValue: => util.lerp @min, @max, @value
+
+return Parameter

@@ -9,16 +9,17 @@ sample = 0
 voices = {}
 
 clearFinishedVoices = ->
-	for i = #voices, 1, -1 do with voices[i]
-		table.remove voices, i if \isFinished!
+	for i = #voices, 1, -1
+		if voices[i]\isFinished!
+			table.remove voices, i
 
 getNextSample = ->
 	s = 0
-	for voice in *voices do with voice
-		\update!
-		s += .1 * \getValue!
+	for voice in *voices
+		voice\update!
+		s += .1 * voice\getValue!
 	clearFinishedVoices!
-	s
+	return s
 
 return {
 	update: (dt) ->
@@ -29,16 +30,18 @@ return {
 			sample += 1
 			if sample == BUFFER_SIZE
 				sample = 0
-				with source
-					\queue data
-					\play!
+				source\queue data
+				source\play!
 
-	keypressed: (key) -> if keymap[key]
-		table.insert voices, Voice keymap[key]
+	keypressed: (key) ->
+		if keymap[key]
+			table.insert voices, Voice keymap[key]
 
-	keyreleased: (key) -> if keymap[key]
-		for i = #voices, 1, -1 do with voices[i]
-			\release! if .note == keymap[key]
+	keyreleased: (key) ->
+		if keymap[key]
+			for i = #voices, 1, -1
+				if voices[i].note == keymap[key]
+					voices[i]\release!
 
 	getActiveVoicesCount: => #voices
 }

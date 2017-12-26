@@ -1,6 +1,6 @@
 util = require 'util'
 
-class
+class Oscillator
 	new: =>
 		@wave = 'sine'
 		@frequency = 440
@@ -18,7 +18,8 @@ class
 		elseif t > 1 - dt
 			t = (t - 1) / dt
 			return t*t + t+t + 1
-		0
+		else
+			return 0
 
 	sine: => math.sin @phase * 2 * math.pi
 

@@ -1,6 +1,6 @@
 util = require 'util'
 
-class
+class Envelope
 	new: (@a, @d, @s, @r) =>
 		@t = 0
 		@v = 0
