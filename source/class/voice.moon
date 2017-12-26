@@ -14,13 +14,35 @@ class Voice
 		@filter = Filter!
 		@v = 0
 
+	getOscillatorFrequency: (i) =>
+		with parameters.oscillator[i]
+			note = @note
+			note += .pitch\getValue!
+			note += @lfo\getValue! * .pitchLfoMod\getValue!
+			note += @modEnvelope\getValue! * .pitchEnvMod\getValue!
+			return util.noteToFrequency note
+
+	getOscillatorShape: (i) =>
+		with parameters.oscillator[i]
+			shape = .shape\getValue!
+			shape += @lfo\getValue! * .shapeLfoMod\getValue!
+			shape += @modEnvelope\getValue! * .shapeEnvMod\getValue!
+			return shape
+
+	getOscillatorSmooth: (i) =>
+		with parameters.oscillator[i]
+			smooth = .smooth\getValue!
+			smooth += @lfo\getValue! * .smoothLfoMod\getValue!
+			smooth += @modEnvelope\getValue! * .smoothEnvMod\getValue!
+			return smooth
+
 	updateOscillators: =>
 		for i, oscillator in ipairs @oscillators
 			with oscillator
 				.wave = parameters.oscillator[i].wave\getValue!
-				.frequency = util.noteToFrequency(@note + parameters.oscillator[i].pitch\getValue! + @lfo\getValue! * parameters.oscillator[i].pitchLfoMod\getValue! + @modEnvelope\getValue! * parameters.oscillator[i].pitchEnvMod\getValue!)
-				.shape = parameters.oscillator[i].shape\getValue! + @lfo\getValue! * parameters.oscillator[i].shapeLfoMod\getValue! + @modEnvelope\getValue! * parameters.oscillator[i].shapeEnvMod\getValue!
-				.smooth = parameters.oscillator[i].smooth\getValue! + @lfo\getValue! * parameters.oscillator[i].smoothLfoMod\getValue!  + @modEnvelope\getValue! * parameters.oscillator[i].smoothEnvMod\getValue!
+				.frequency = @getOscillatorFrequency i
+				.shape = @getOscillatorShape i
+				.smooth = @getOscillatorSmooth i
 				\update!
 
 	updateEnvelopes: =>
@@ -37,11 +59,25 @@ class Voice
 			.r = parameters.modEnvelope.r\getValue!
 			\update!
 
+	getFilterCutoff: =>
+		with parameters.filter
+			cutoff = .cutoff\getValue!
+			cutoff += @lfo\getValue! * .cutoffLfoMod\getValue!
+			cutoff += @modEnvelope\getValue! * .cutoffEnvMod\getValue!
+			return cutoff
+
+	getFilterResonance: =>
+		with parameters.filter
+			resonance = .resonance\getValue!
+			resonance += @lfo\getValue! * .resonanceLfoMod\getValue!
+			resonance += @modEnvelope\getValue! * .resonanceEnvMod\getValue!
+			return resonance
+
 	updateFilter: =>
 		with @filter
-			.cutoff = parameters.filter.cutoff\getValue! + @lfo\getValue! * parameters.filter.cutoffLfoMod\getValue! + @modEnvelope\getValue! * parameters.filter.cutoffEnvMod\getValue!
-			.resonance = parameters.filter.resonance\getValue! + @lfo\getValue! * parameters.filter.resonanceLfoMod\getValue! + @modEnvelope\getValue! * parameters.filter.resonanceEnvMod\getValue!
 			.level = parameters.filter.level\getValue!
+			.cutoff = @getFilterCutoff!
+			.resonance = @getFilterResonance!
 
 	update: =>
 		@updateOscillators!
