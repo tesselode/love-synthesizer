@@ -43,18 +43,18 @@ return {
 			sample += 1
 			if sample == BUFFER_SIZE
 				sample = 0
-				source\queue data
-				source\play!
+				with source
+					\queue data
+					\play!
 
 	keypressed: (key) ->
-		if keymap[key]
-			table.insert voices, Voice keymap[key], lfo
+		return false unless keymap[key]
+		table.insert voices, Voice keymap[key], lfo
 
 	keyreleased: (key) ->
-		if keymap[key]
-			for i = #voices, 1, -1
-				if voices[i].note == keymap[key]
-					voices[i]\release!
+		return false unless keymap[key]
+		for i = #voices, 1, -1
+			voices[i]\release! if voices[i].note == keymap[key]
 
 	getActiveVoicesCount: => #voices
 }
