@@ -5,7 +5,7 @@ parameters = require 'parameters'
 util = require 'util'
 
 class Voice
-	new: (@note) =>
+	new: (@note, @lfo) =>
 		@oscillators = {}
 		for i = 1, NUM_OSCILLATORS
 			@oscillators[i] = Oscillator!
@@ -17,9 +17,9 @@ class Voice
 		for i, oscillator in ipairs @oscillators
 			with oscillator
 				.wave = parameters.oscillator[i].wave\getValue!
-				.frequency = util.noteToFrequency(@note + parameters.oscillator[i].pitch\getValue!)
-				.shape = parameters.oscillator[i].shape\getValue!
-				.smooth = parameters.oscillator[i].smooth\getValue!
+				.frequency = util.noteToFrequency(@note + parameters.oscillator[i].pitch\getValue! + @lfo\getValue! * parameters.oscillator[i].pitchLfoMod\getValue!)
+				.shape = parameters.oscillator[i].shape\getValue! + @lfo\getValue! * parameters.oscillator[i].shapeLfoMod\getValue!
+				.smooth = parameters.oscillator[i].smooth\getValue! + @lfo\getValue! * parameters.oscillator[i].smoothLfoMod\getValue!
 				\update!
 
 	updateEnvelopes: =>
@@ -32,8 +32,8 @@ class Voice
 
 	updateFilter: =>
 		with @filter
-			.cutoff = parameters.filter.cutoff\getValue!
-			.resonance = parameters.filter.resonance\getValue!
+			.cutoff = parameters.filter.cutoff\getValue! + @lfo\getValue! * parameters.filter.cutoffLfoMod\getValue!
+			.resonance = parameters.filter.resonance\getValue! + @lfo\getValue! * parameters.filter.resonanceLfoMod\getValue!
 			.level = parameters.filter.level\getValue!
 
 	update: =>

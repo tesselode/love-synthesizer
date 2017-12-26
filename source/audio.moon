@@ -1,4 +1,7 @@
 keymap = require 'keymap'
+Oscillator = require 'class.oscillator'
+parameters = require 'parameters'
+util = require 'util'
 Voice = require 'class.voice'
 
 source = love.audio.newQueueableSource SAMPLE_RATE, BIT_DEPTH, CHANNELS
@@ -6,7 +9,16 @@ data = love.sound.newSoundData BUFFER_SIZE, SAMPLE_RATE, BIT_DEPTH, CHANNELS
 timer = 0
 sample = 0
 
+lfo = Oscillator!
+
 voices = {}
+
+updateLfo = ->
+	with lfo
+		.frequency = parameters.lfo.frequency\getValue!
+		.shape = parameters.lfo.shape\getValue!
+		.smooth = parameters.lfo.smooth\getValue!
+		\update!
 
 clearFinishedVoices = ->
 	for i = #voices, 1, -1
@@ -14,10 +26,12 @@ clearFinishedVoices = ->
 			table.remove voices, i
 
 getNextSample = ->
+	updateLfo!
 	s = 0
 	for voice in *voices
 		voice\update!
 		s += .1 * voice\getValue!
+	s = util.clamp s, -1, 1
 	clearFinishedVoices!
 	return s
 
@@ -35,7 +49,7 @@ return {
 
 	keypressed: (key) ->
 		if keymap[key]
-			table.insert voices, Voice keymap[key]
+			table.insert voices, Voice keymap[key], lfo
 
 	keyreleased: (key) ->
 		if keymap[key]

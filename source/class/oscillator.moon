@@ -26,10 +26,12 @@ class Oscillator
 	saw: => 2 * @phase - 1 - @blep!
 
 	update: =>
+		shape = @shape < .1 and .1 or @shape
+		smooth = util.clamp @smooth, .1, 1
 		@phase += @frequency / SAMPLE_RATE
 		@phase %= 1
 		v = @[@wave] @
-		v = math.abs(v) ^ @shape * util.sign(v)
-		@v = util.lerp @v, v, @smooth
+		v = math.abs(v) ^ shape * util.sign(v)
+		@v = util.lerp @v, v, smooth
 
 	getValue: => @v
