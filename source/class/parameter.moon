@@ -6,10 +6,24 @@ Parameter = {}
 class Parameter.Choice
 	new: (@name, @choices, @default = 1) =>
 		@value = @default
+		@slider = setmetatable {min: 1, max: #@choices, _value: @value}, {
+			__index: (t, k) -> k == 'value' and t._value or rawget(t, k)
+			__newindex: (t, k, v) ->
+				if k == 'value'
+					t._value = v
+					@value = math.floor v
+				else
+					rawset t, k, v
+		}
 
 	getValue: => @choices[@value]
 
 	updateGui: =>
+		with suit
+			.layout\push .layout\row 200, 20
+			.Slider @slider, .layout\col 200, 20
+			.Label @name..': '..@getValue!, {align: 'left'}, .layout\col 200, 20
+			.layout\pop!
 
 class Parameter.Slider
 	new: (@name, @min, @max, @default, @curve = 1) =>
