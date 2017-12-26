@@ -10,7 +10,7 @@ class Parameter.Choice
 
 class Parameter.Slider
 	new: (@name, @min, @max, @default) =>
-		@value = @default
+		@value = (@default - @min) / (@max - min)
 
 	getValue: => util.lerp @min, @max, @value
 
