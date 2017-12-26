@@ -12,6 +12,10 @@ Parameter = require 'class.parameter'
 			pitch: Parameter.Slider 'Pitch', -24, 24, -12.1
 			shape: Parameter.Slider 'Shape', .1, 100, 1
 			smooth: Parameter.Slider 'Smooth', .1, 1, 1
+	filter:
+		cutoff: Parameter.Slider 'Cutoff', 0, .99, .99
+		resonance: Parameter.Slider 'Resonance', 0, .9, 0
+		level: Parameter.Slider 'Level', 1, 8, 4
 	volumeEnvelope:
 		a: Parameter.Slider 'Attack', .01, 10, .01
 		d: Parameter.Slider 'Decay', .01, 10, 5

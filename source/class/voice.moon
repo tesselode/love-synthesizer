@@ -1,4 +1,5 @@
 Envelope = require 'class.envelope'
+Filter = require 'class.filter'
 Oscillator = require 'class.oscillator'
 parameters = require 'parameters'
 util = require 'util'
@@ -8,12 +9,8 @@ class Voice
 		@oscillators = {}
 		for i = 1, NUM_OSCILLATORS
 			@oscillators[i] = Oscillator!
-		@volumeEnvelope = Envelope(
-			parameters.volumeEnvelope.a\getValue!,
-			parameters.volumeEnvelope.d\getValue!,
-			parameters.volumeEnvelope.s\getValue!,
-			parameters.volumeEnvelope.r\getValue!
-		)
+		@volumeEnvelope = Envelope!
+		@filter = Filter!
 		@v = 0
 
 	updateOscillators: =>
@@ -33,13 +30,21 @@ class Voice
 			.r = parameters.volumeEnvelope.r\getValue!
 			\update!
 
+	updateFilter: =>
+		with @filter
+			.cutoff = parameters.filter.cutoff\getValue!
+			.resonance = parameters.filter.resonance\getValue!
+			.level = parameters.filter.level\getValue!
+
 	update: =>
 		@updateOscillators!
 		@updateEnvelopes!
+		@updateFilter!
 		@v = 0
 		for oscillator in *@oscillators
 			@v += oscillator\getValue!
 		@v *= @volumeEnvelope\getValue!
+		@v = @filter\process @v
 
 	release: =>
 		@volumeEnvelope\release!

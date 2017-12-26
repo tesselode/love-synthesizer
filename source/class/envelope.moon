@@ -2,6 +2,10 @@ util = require 'util'
 
 class Envelope
 	new: (@a, @d, @s, @r) =>
+		@a = .01
+		@d = 5
+		@s = 1
+		@r = .01
 		@t = 0
 		@v = 0
 		@released = false
