@@ -16,4 +16,4 @@ class Filter
 		@buffer[0] += cutoff * (input - @buffer[0] + feedback * (@buffer[0] - @buffer[1]))
 		for i = 1, #@buffer
 			@buffer[i] += cutoff * (@buffer[i-1] - @buffer[i])
-		return @buffer[@level]
+		return @buffer[math.floor(@level)]

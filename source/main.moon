@@ -6,8 +6,10 @@ export NUM_OSCILLATORS = 2
 export FILTER_BUFFERS = 8
 
 audio = require 'audio'
+gui = require 'gui'
 
 love.update = (dt) ->
+	gui.update!
 	audio.update dt
 
 love.keypressed = (key) ->
@@ -17,4 +19,4 @@ love.keypressed = (key) ->
 love.keyreleased = (...) -> audio.keyreleased ...
 
 love.draw = ->
-	love.graphics.print audio\getActiveVoicesCount!
+	gui.draw!
