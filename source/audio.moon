@@ -22,8 +22,7 @@ updateLfo = ->
 
 clearFinishedVoices = ->
 	for i = #voices, 1, -1
-		if voices[i]\isFinished!
-			table.remove voices, i
+		table.remove voices, i if voices[i]\isFinished!
 
 getNextSample = ->
 	updateLfo!

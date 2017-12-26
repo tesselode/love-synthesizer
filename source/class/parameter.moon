@@ -6,8 +6,12 @@ Parameter = {}
 class Parameter.Choice
 	new: (@name, @choices, @default = 1) =>
 		@value = @default
-		@slider = setmetatable {min: 1, max: #@choices, _value: @value}, {
-			__index: (t, k) -> k == 'value' and t._value or rawget(t, k)
+		@slider = setmetatable {
+			min: 1
+			max: #@choices
+			_value: @value
+		}, {
+			__index: (t, k) -> k == 'value' and t._value or rawget t, k
 			__newindex: (t, k, v) ->
 				if k == 'value'
 					t._value = v
@@ -22,13 +26,18 @@ class Parameter.Choice
 		with suit
 			.layout\push .layout\row 200, 20
 			.Slider @slider, .layout\col 200, 20
-			.Label @name..': '..@getValue!, {align: 'left'}, .layout\col 200, 20
+			.Label @name..': '..@getValue!, {align: 'left'},
+				.layout\col 200, 20
 			.layout\pop!
 
 class Parameter.Slider
 	new: (@name, @min, @max, @default, @curve = 1) =>
 		@value = ((@default - @min) / (@max - @min)) ^ (1 / @curve)
-		@slider = setmetatable {min: 0, max: 1, _value: @value}, {
+		@slider = setmetatable {
+			min: 0
+			max: 1
+			_value: @value
+		}, {
 			__index: (t, k) -> k == 'value' and t._value or rawget(t, k)
 			__newindex: (t, k, v) ->
 				if k == 'value'
@@ -44,7 +53,8 @@ class Parameter.Slider
 		with suit
 			.layout\push .layout\row 200, 20
 			.Slider @slider, .layout\col 200, 20
-			.Label @name..': '..@getValue!, {align: 'left'}, .layout\col 200, 20
+			.Label @name..': '..@getValue!, {align: 'left'},
+				.layout\col 200, 20
 			.layout\pop!
 
 return Parameter

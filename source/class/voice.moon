@@ -6,9 +6,7 @@ util = require 'util'
 
 class Voice
 	new: (@note, @lfo) =>
-		@oscillators = {}
-		for i = 1, NUM_OSCILLATORS
-			@oscillators[i] = Oscillator!
+		@oscillators = [Oscillator! for i = 1, NUM_OSCILLATORS]
 		@volumeEnvelope = Envelope!
 		@modEnvelope = Envelope!
 		@filter = Filter!

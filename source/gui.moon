@@ -1,7 +1,7 @@
 parameters = require 'parameters'
 suit = require 'lib.suit'
 
-return {
+{
 	update: =>
 		with suit.layout
 			\reset 50, 50
