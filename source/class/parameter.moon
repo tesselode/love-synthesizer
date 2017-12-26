@@ -27,7 +27,7 @@ class Parameter.Choice
 
 class Parameter.Slider
 	new: (@name, @min, @max, @default, @curve = 1) =>
-		@value = ((@default - @min) / (@max - min)) ^ (1 / @curve)
+		@value = ((@default - @min) / (@max - @min)) ^ (1 / @curve)
 		@slider = setmetatable {min: 0, max: 1, _value: @value}, {
 			__index: (t, k) -> k == 'value' and t._value or rawget(t, k)
 			__newindex: (t, k, v) ->
