@@ -21,7 +21,7 @@ class Oscillator
 		else
 			return 0
 
-	sine: => math.sin @phase * 2 * math.pi
+	sine: => -math.sin @phase * 2 * math.pi
 
 	saw: => 2 * @phase - 1 - @blep!
 
