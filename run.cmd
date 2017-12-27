@@ -1,0 +1,1 @@
+moonc source && love --console source
