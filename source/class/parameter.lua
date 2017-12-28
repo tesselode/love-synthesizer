@@ -56,7 +56,7 @@ function Parameter.Slider:new(name, min, max, default, curve)
 		max = 1,
 		_value = self.value,
 	}, {
-		__index = function(t, k) 
+		__index = function(t, k)
 			return k == 'value' and t._value or rawget(t, k)
 		end,
 		__newindex = function(t, k, v)

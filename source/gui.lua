@@ -3,7 +3,7 @@ local suit = require 'lib.suit'
 
 local gui = {}
 
-function gui:update()
+function gui.update()
 	suit.layout:reset(50, 50)
 	suit.layout:padding(10, 10)
 
@@ -73,7 +73,7 @@ function gui:update()
 	suit.layout:pop()
 end
 
-function gui:draw()
+function gui.draw()
 	suit:draw()
 end
 
