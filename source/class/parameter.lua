@@ -14,7 +14,7 @@ function Parameter.Choice:new(name, choices, default)
 	self.slider = setmetatable({
 		min = 1,
 		max = #self.choices,
-		_value = value,
+		_value = self.value,
 	}, {
 		__index = function(t, k)
 			return k == 'value' and t._value or rawget(t, k)
