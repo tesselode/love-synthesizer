@@ -8,20 +8,24 @@ function Filter:new()
 	self.resonance = 0
 	self.level = 4
 	self.buffer = {}
-	for i = 0, FILTER_BUFFERS do
+	for i = 1, FILTER_BUFFERS do
 		self.buffer[i] = 0
 	end
 end
 
+-- Karlsen fast ladder
 function Filter:process(input)
 	local cutoff = util.clamp(self.cutoff, 0, .99)
 	local resonance = util.clamp(self.resonance, 0, .9)
-	local feedback = resonance + resonance / (1 - cutoff)
-	self.buffer[0] = self.buffer[0] + cutoff * (input - self.buffer[0] + feedback * (self.buffer[0] - self.buffer[1]))
-	for i = 1, #self.buffer do
+	local level = math.floor(self.level)
+
+	local rscl = self.buffer[level]
+	if rscl > 1 then rscl = 1 end
+	self.buffer[1] = (-rscl * resonance) + input
+	for i = 2, #self.buffer do
 		self.buffer[i] = self.buffer[i] + cutoff * (self.buffer[i-1] - self.buffer[i])
 	end
-	return self.buffer[math.floor(self.level)]
+	return self.buffer[level]
 end
 
 return Filter
